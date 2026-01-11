@@ -24,5 +24,3 @@ src/run_training.py
 metadata/cvt.csv
 metadata/mp16.csv
 metadata/skyfinder_train.csv
-
-.gitignore
