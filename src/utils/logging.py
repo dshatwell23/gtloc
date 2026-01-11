@@ -26,4 +26,3 @@ def print_results(results):
             print(f"Time Results for {dataset}:")
             print(f"  MAE (months)     -> {results['time'][dataset]['mean_month_error']:.4f} months")
             print(f"  MAE (hours)      -> {results['time'][dataset]['mean_hour_error']:.4f} hours")
-            print(f"  TPS              -> {100*results['time'][dataset]['mean_tps']:.4f}%")
