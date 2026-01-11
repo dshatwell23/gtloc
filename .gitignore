@@ -1,0 +1,26 @@
+# VSCode settings
+.vscode/
+
+# macOS metadata
+**/.DS_Store
+
+# Python cache
+**/__pycache__/
+
+# Checkpoints
+ckpts/
+
+# Temporary working directory
+temp_dir/
+
+# Specific backup config
+src/configs/config_BACKUP.py
+
+# Training artifacts
+src/train/
+src/run_training.py
+
+# Training csv files
+metadata/cvt.csv
+metadata/mp16.csv
+metadata/skyfinder_train.csv
