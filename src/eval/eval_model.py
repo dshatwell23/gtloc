@@ -52,9 +52,7 @@ def compute_time_errors(ref_time, pred_time):
     hour_errors = torch.abs(ref_hour - pred_hour)
     hour_errors = torch.min(hour_errors, 24 - hour_errors)
 
-    tps = 1 - torch.sqrt((month_errors / 6.0)**2 + (hour_errors / 12.0)**2) / math.sqrt(2)
-
-    return month_errors, hour_errors, tps
+    return month_errors, hour_errors
 
 
 def chunked_argmax_gallery_chunked(
@@ -202,7 +200,6 @@ def eval_model(model, geo_loaders, time_loaders, tencrop=False, device="cuda"):
         # Streaming sums (CPU scalars)
         sum_month = 0.0
         sum_hour = 0.0
-        sum_tps = 0.0
         total = 0
 
         for imgs, metadata in tqdm(loader, desc=f"{name}"):
@@ -224,20 +221,18 @@ def eval_model(model, geo_loaders, time_loaders, tencrop=False, device="cuda"):
             pred_time = time_gallery_cpu[pred_idx].cpu()     # CPU [B, 5]
             ref_time = metadata["time"].cpu()                # CPU [B, 5]
 
-            month_err, hour_err, tps = compute_time_errors(ref_time, pred_time)
+            month_err, hour_err = compute_time_errors(ref_time, pred_time)
             bs = month_err.numel()
             total += bs
 
             sum_month += month_err.sum().item()
             sum_hour += hour_err.sum().item()
-            sum_tps += tps.sum().item()
 
-            del imgs, feats, pred_idx, pred_time, ref_time, month_err, hour_err, tps
+            del imgs, feats, pred_idx, pred_time, ref_time, month_err, hour_err
 
         time_results[name] = {
             "mean_month_error": sum_month / max(total, 1),
             "mean_hour_error": sum_hour / max(total, 1),
-            "mean_tps": sum_tps / max(total, 1),
         }
 
     del time_gallery_features
