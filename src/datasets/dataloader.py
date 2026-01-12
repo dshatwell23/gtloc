@@ -82,6 +82,10 @@ class GeoTemporalDataset(Dataset):
 
 
 class SkyFinderDataset(GeoTemporalDataset):
+    """
+    This dataset yields batches balanced across camera IDs.
+    It should only be used during training.
+    """
     def __init__(self, *args, **kwargs):
         super(SkyFinderDataset, self).__init__(*args, **kwargs)
 

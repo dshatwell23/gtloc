@@ -53,6 +53,11 @@ We tested on a Quadro RTX 6000 (24GB). If you hit memory limits, reduce batch si
 
 Results are printed to the terminal and saved to `output/eval_results.json`.
 
+## TO DO
+
+- Add training code
+- Upload model to HuggingFace
+
 ## Citation
 
 If you use this work, please cite:
