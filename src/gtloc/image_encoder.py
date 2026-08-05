@@ -26,14 +26,16 @@ class ImageEncoder(nn.Module):
     def forward(self, x):
         if self.freeze_backbone:
             with torch.no_grad():
-                x = self.backbone.get_image_features(pixel_values=x)
+                x = self.backbone.get_image_features(pixel_values=x, return_dict=False)
         else:
-            x = self.backbone.get_image_features(pixel_values=x)
+            x = self.backbone.get_image_features(pixel_values=x, return_dict=False)
         # x = self.backbone.get_image_features(pixel_values=x)
+        if isinstance(x, tuple):
+            x = x[1] # Extract tensor from tuple
         x = self.mlp(x)
         return x
     
     def forward_image(self, image):
-        x = self.backbone.get_image_features(pixel_values=image)
+        x = self.backbone.get_image_features(pixel_values=image, return_dict=False)
         x = self.mlp(x)
         return x

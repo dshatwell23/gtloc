@@ -4,7 +4,7 @@
 
 experiment_name = 'gtloc'
 seed = 34
-
+dropout_prob = 0.1
 
 ##############################################
 # DATASETS

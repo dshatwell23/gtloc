@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 
 import numpy as np
+import os
 
 from .image_encoder import ImageEncoder
 from .location_encoder import LocationEncoder
@@ -69,10 +70,20 @@ class GTLoc(nn.Module):
                 param.requires_grad = False
     
     def _load_galleries(self):            
-        self.gps_gallery_100k = torch.tensor(np.load(f'model/gps_galleries/mp16.npy'), dtype=torch.float32)
-        self.gps_gallery_500k = torch.tensor(np.load(f'model/gps_galleries/mp16_500k.npy'), dtype=torch.float32)
+        module_dir = os.path.dirname(os.path.abspath(__file__))
+        self.gps_gallery_100k = torch.tensor(
+            np.load(os.path.join(module_dir, 'gps_galleries', 'mp16.npy')),
+            dtype=torch.float32
+        )
+        self.gps_gallery_500k = torch.tensor(
+            np.load(os.path.join(module_dir, 'gps_galleries', 'mp16_500k.npy')),
+            dtype=torch.float32
+        )
         if self.galleries == 'data_dist':
-            self.time_gallery = torch.tensor(np.load('model/time_galleries/cvt.npy'), dtype=torch.float32)
+            self.time_gallery = torch.tensor(
+                np.load(os.path.join(module_dir, 'time_galleries', 'cvt.npy')),
+                dtype=torch.float32
+            )
         else: # random
             N = 500_000
             M = math.ceil(math.sqrt(N))
