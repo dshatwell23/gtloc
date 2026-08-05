@@ -8,8 +8,8 @@ from torch.utils.data import DataLoader
 import numpy as np
 
 from utils import print_results
-from src.configs import config
-from model import GTLoc
+from configs import config
+from gtloc import GTLoc
 from datasets.dataloader import GeoTemporalDataset, retvals
 from datasets.transforms import get_transforms
 from eval.eval_model import eval_model
